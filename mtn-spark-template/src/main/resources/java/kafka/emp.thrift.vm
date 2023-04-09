@@ -1,0 +1,12 @@
+namespace java ${package}
+
+struct ${entityName} {
+  1 : required i32 empno,
+  2 : required string ename,
+  3 : optional string job,
+  4 : optional i32 mgr,
+  5 : optional string hiredate,
+  6 : optional double sal,
+  7 : optional double comm,
+  8 : required i32 deptno
+}

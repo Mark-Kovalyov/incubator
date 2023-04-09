@@ -1,0 +1,18 @@
+[
+  {
+   "namespace":"${package}",
+   "type" : "record",
+   "name" : "${entityName}",
+   "doc"  : "",
+   "fields" : [
+     { "name" : "EMPNO",    "type" : "int" },
+     { "name" : "ENAME",    "type" : "string" },
+     { "name" : "JOB",      "type" : ["null", "int"] },
+     { "name" : "MGR",      "type" : ["null", "int"] },
+     { "name" : "HIREDATE", "type" : ["null", "string"] },
+     { "name" : "SAL",      "type" : ["null", "double"] },
+     { "name" : "COMM",     "type" : ["null", "double"] },
+     { "name" : "DEPTNO",   "type" : "int" }
+   ]
+  }
+]

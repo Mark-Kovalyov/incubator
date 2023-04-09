@@ -1,0 +1,1 @@
+java-template --app-name singular-value-decomposition --company-name mayton.spark.ml --main-class SVDApp

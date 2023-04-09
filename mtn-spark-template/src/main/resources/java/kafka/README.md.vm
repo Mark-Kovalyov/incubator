@@ -1,0 +1,17 @@
+# ${appName}
+
+
+#if($avro)
+
+## AVRO
+
+```
+
+```
+
+#end
+
+## Prepare Kafka topics
+```
+bin/kafka-topics.sh --bootstrap-server=localhost:9092 --create --topic ${topic} --partitions ${part}
+```

@@ -1,0 +1,7 @@
+# ${appName}
+
+## How to use
+
+```bash
+$ java -jar ${appName}.jar
+```

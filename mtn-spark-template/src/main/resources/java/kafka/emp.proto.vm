@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package ${package};
+
+option java_package = "${package}";
+option java_multiple_files = true;
+option optimize_for = CODE_SIZE;
+
+import "google/protobuf/any.proto";
+
+message ${entityName} {
+  int32 empId = 1;
+  string ename = 2;
+  string job = 3;
+  int32 mgr = 4;
+  string hiredate = 5;
+  double sal = 6;
+  double comm = 7;
+  string comments = 8 [deprecated = true];
+  reserved 9 to 100;
+}

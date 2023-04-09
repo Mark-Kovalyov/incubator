@@ -1,0 +1,17 @@
+package ${packageName}
+
+import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
+
+object ${mainClass} {
+  def main(args: Array[String]): Unit = {
+    val spark: SparkSession = SparkSession.builder.getOrCreate()
+    import spark.implicits._
+    val red: DataFrame = spark
+    .read.option("header", true)
+    .option("delimiter", ";")
+    .option("inferSchema", true)
+    .csv("input.csv")
+    red.printSchema()
+    red.show()
+  }
+}

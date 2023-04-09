@@ -1,0 +1,13 @@
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
+case class ${entityName} (
+    empno : Int,
+    ename : String,
+    job : String,
+    mgr : Option[Int],
+    hiredate : LocalDate,
+    sal : Double,
+    comm : Option[Double],
+    deptno : Int)

@@ -1,0 +1,12 @@
+run: build
+	spark-submit \
+ --master local[4] \
+ --name "${name}" \
+ --driver-memory 2G \
+ --executor-memory 2G \
+ --deploy-mode client \
+ --class "${packageName}.{mainClass}" \
+ target/scala-${scalaMajor}/${name}_${scalaMajor}-${version}.jar
+
+build:
+	sbt clean package

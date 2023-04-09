@@ -1,0 +1,65 @@
+package ${package];
+
+import com.azure.cosmos.CosmosClient;
+import com.azure.cosmos.CosmosClientBuilder;
+import com.azure.cosmos.CosmosContainer;
+import com.azure.cosmos.CosmosDatabase;
+import com.azure.cosmos.models.*;
+import org.apache.commons.cli.*;
+
+import java.io.*;
+import java.util.*;
+
+public class ${className} {
+
+    static class Emp{
+        private String empId;
+        private String ename;
+
+        public String getEmpId() {
+            return empId;
+        }
+
+        public void setEmpId(String empId) {
+            this.empId = empId;
+        }
+
+        public String getEname() {
+            return ename;
+        }
+
+        public void setEname(String ename) {
+            this.ename = ename;
+        }
+    }
+
+    public static CosmosItemResponse<Emp> lookupById(CosmosContainer cont, String id) {
+        CosmosItemResponse<Emp> resp = empCont.readItem(id, new PartitionKey(id), Emp.class);
+        return resp;
+    }
+
+    public static void main(String[] args) throws ParseException, IOException {
+
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("${appName}.properties"));
+        String endpoint = properties.getProperty("endpoint");
+        String key = properties.getProperty("key");
+
+        CosmosClientBuilder clientBuilder = new CosmosClientBuilder();
+        clientBuilder.endpoint(endpoint);
+        clientBuilder.key(key);
+        CosmosClient cosmosClient = clientBuilder.buildClient();
+
+        CosmosDatabase customerDatabase = cosmosClient.getDatabase("scott");
+
+        CosmosContainer empCont = customerDatabase.getContainer("emp");
+
+
+
+        Emp emp = resp.getItem();
+
+        cosmosClient.close();
+
+    }
+
+}

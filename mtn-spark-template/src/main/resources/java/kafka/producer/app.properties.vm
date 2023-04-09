@@ -1,0 +1,8 @@
+bootstrap.servers=localhost:9092
+key.serializer=org.apache.kafka.common.serialization.UUIDSerializer
+value.serializer=org.apache.kafka.common.serialization.IntegerSerializer
+client.id=client01
+acks=0
+retries=0
+
+topic=topic01

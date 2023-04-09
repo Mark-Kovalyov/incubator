@@ -1,0 +1,210 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>mayton.generators</groupId>
+  <artifactId>mtn-spark-template</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>mtn-spark-template</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <kafka.version>3.4.0</kafka.version>
+    <apache.avro.version>1.11.1</apache.avro.version>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>java-kafka-producer</id>
+      <properties>
+        <main.class.name>mayton.generators.kafka.JavaKafkaProducerTemplate</main.class.name>
+        <jar.name>java-kafka-producer-template</jar.name>
+      </properties>
+    </profile>
+    <profile>
+      <id>scala</id>
+      <properties>
+        <main.class.name>mayton.generators.ScalaTemplate</main.class.name>
+        <jar.name>scala-template</jar.name>
+      </properties>
+    </profile>
+    <profile>
+      <id>cosmos</id>
+      <properties>
+        <main.class.name>mayton.generators.CosmosDbTemplate</main.class.name>
+        <jar.name>cosmos-db-template</jar.name>
+      </properties>
+    </profile>
+    <profile>
+      <id>java</id>
+      <properties>
+        <main.class.name>mayton.generators.JavaTemplate</main.class.name>
+        <jar.name>java-template</jar.name>
+      </properties>
+    </profile>
+    <profile>
+      <id>java-jdbc</id>
+      <properties>
+        <main.class.name>mayton.generators.JavaJdbcTemplate</main.class.name>
+        <jar.name>java-jdbc-template</jar.name>
+      </properties>
+    </profile>
+    <profile>
+      <id>java-jdbc-hikari</id>
+      <properties>
+        <main.class.name>mayton.generators.JavaHiakriTemplate</main.class.name>
+        <jar.name>java-jdbc-hikari-template</jar.name>
+      </properties>
+    </profile>
+    <profile>
+      <id>spark</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <main.class.name>mayton.generators.SparkTemplate</main.class.name>
+        <jar.name>spark-template</jar.name>
+
+      </properties>
+    </profile>
+  </profiles>
+
+
+  <dependencies>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-clients</artifactId>
+      <version>${kafka.version}</version>
+    </dependency>
+
+    <!-- Command Line interface support -->
+
+    <dependency>
+      <groupId>org.apache.avro</groupId>
+      <artifactId>avro</artifactId>
+      <version>${apache.avro.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.avro</groupId>
+      <artifactId>avro-mapred</artifactId>
+      <version>${apache.avro.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.12.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.10.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.9.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jfree</groupId>
+      <artifactId>jfreechart</artifactId>
+      <version>1.5.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.github.qsy7.java.dependencies</groupId>
+      <artifactId>hikari-jdbc-connection-pool</artifactId>
+      <version>0.1.2</version>
+      <type>pom</type>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity-engine-core</artifactId>
+      <version>2.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity-tools</artifactId>
+      <version>2.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-ext</artifactId>
+      <version>2.0.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.4.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-cli</groupId>
+      <artifactId>commons-cli</artifactId>
+      <version>1.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <Main-Class>${main.class.name}</Main-Class>
+            </manifest>
+          </archive>
+          <finalName>${jar.name}</finalName>
+        </configuration>
+      </plugin>
+
+    </plugins>
+
+  </build>
+</project>

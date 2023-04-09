@@ -1,0 +1,13 @@
+scalaVersion := "${scalaMajor}.${scalaMinor}"
+
+name := "${appName}"
+organization := "${organization}"
+version := "${version}"
+
+libraryDependencies ++= Seq(
+  "org.scala-lang.modules" %% "scala-parser-combinators" % "${scalaParserCombinatorsVer}",
+  "org.apache.spark" %% "spark-core"  % "${sparkVersion}",
+  "org.apache.spark" %% "spark-sql"   % "${sparkVersion}",
+  "org.apache.spark" %% "spark-mllib" % "${sparkVersion}",
+  "com.databricks"   %% "dbutils-api" % "${dbutilsApiVersion}"
+)
