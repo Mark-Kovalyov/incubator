@@ -57,13 +57,23 @@ public class JavaKafkaProducerTemplate extends GenericTemplate {
 
     @Override
     public List<Pair<String, String>> velocityTemplates(CommandLine cli) {
-        return Arrays.asList(
+        List<Pair<String, String>> pairs = Arrays.asList(
                 Pair.of("Producer.java.vm",    "src/main/java/" + domainToPath(packageName) + "/" + mainClass + ".java"),
                 Pair.of("app.properties.vm",   "app.properties"),
                 Pair.of("pom.xml.vm",          "pom.xml"),
                 Pair.of("README.md.vm",        "README.md"),
                 Pair.of("Makefile.vm",         "Makefile")
         );
+        if (cli.hasOption("avro")) {
+            pairs.add(Pair.of("emp.avsc.vm", "avro/emp.avsc"));
+        }
+        if (cli.hasOption("proto")) {
+            pairs.add(Pair.of("emp.proto.vm", "prorobuf/emp.proto"));
+        }
+        if (cli.hasOption("thrift")) {
+            pairs.add(Pair.of("emp.thrift.vm", "thrift/emp.thrift"));
+        }
+        return pairs;
     }
 
     @Override

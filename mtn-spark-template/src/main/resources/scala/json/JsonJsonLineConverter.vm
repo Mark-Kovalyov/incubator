@@ -1,0 +1,36 @@
+import com.google.gson.JsonObject
+import org.jsfr.json.compiler.JsonPathCompiler
+import org.jsfr.json.provider.GsonProvider
+import org.jsfr.json.{GsonParser, JsonSurfer}
+import org.slf4j.{Logger, LoggerFactory}
+
+import java.io.{FileInputStream, FileWriter, InputStream, PrintWriter, Writer}
+import scala.collection.JavaConverters.asScalaIteratorConverter
+
+object DemoJsurfer {
+
+  val logger : Logger = LoggerFactory.getLogger(DemoJsurfer.getClass)
+
+  def conv(sourceJsonFile: String, jsonPathQuery: String, destinationJsonLines: String): Int = {
+    val is: InputStream = new FileInputStream(sourceJsonFile)
+    val surfer = new JsonSurfer(GsonParser.INSTANCE, GsonProvider.INSTANCE)
+    val iterator: Iterator[AnyRef] = surfer.iterator(is, JsonPathCompiler.compile(jsonPathQuery)).asScala
+    val pw: PrintWriter = new PrintWriter(new FileWriter(destinationJsonLines))
+    var cnt = 0
+    iterator.foreach(item => {
+      val googleJsonObject: JsonObject = item.asInstanceOf[JsonObject]
+      pw.println(googleJsonObject.toString)
+      cnt = cnt + 1
+    })
+    pw.close()
+    is.close()
+    cnt
+  }
+
+  def main(args:Array[String]) : Unit = {
+
+    var cnt1 = conv("input.json", "$.catalog.products.product[*]", "output.jsonl")
+
+  }
+
+}

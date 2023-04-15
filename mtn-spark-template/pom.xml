@@ -77,14 +77,23 @@
 
   <dependencies>
 
-    <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
+    <dependency>
+      <groupId>com.github.jsurfer</groupId>
+      <artifactId>jsurfer-core</artifactId>
+      <version>1.6.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.jsurfer</groupId>
+      <artifactId>jsurfer-gson</artifactId>
+      <version>1.6.4</version>
+    </dependency>
+
     <dependency>
       <groupId>org.apache.kafka</groupId>
       <artifactId>kafka-clients</artifactId>
       <version>${kafka.version}</version>
     </dependency>
-
-    <!-- Command Line interface support -->
 
     <dependency>
       <groupId>org.apache.avro</groupId>
