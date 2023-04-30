@@ -1,4 +1,4 @@
-install_dir="/utils"
+install_dir="$(HOME)/bin"
 
 build: clean spark-template java-template java-jdbc-template java-jdbc-hikari-template scala-template cosmos-db-template java-kafka-producer-template
 	mvn test install dependency:copy-dependencies

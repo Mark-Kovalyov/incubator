@@ -1,9 +1,18 @@
 scalaVersion := "${scalaMajor}.${scalaMinor}"
 
-name := "${name}"
 organization := "${organization}"
-version := "${version}"
+name         := "${name}"
+version      := "${version}"
 
 libraryDependencies ++= Seq(
-   "org.scalatestplus" %% "scalacheck-1-17" % "3.2.15.0" % "test"
+   "org.scalatestplus" %% "scalacheck-1-17" % "3.2.15.0" % "test",
+
+#if($ca)
+   "org.typelevel"     %% "cats-core"       % "2.9.0",
+#end
+
+#if($z)
+   "dev.zio"           %% "zio"             % "2.0.12"
+#end
+
 )

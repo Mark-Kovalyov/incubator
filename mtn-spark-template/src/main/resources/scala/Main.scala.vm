@@ -1,3 +1,7 @@
-object ${mainClass} {
+package ${packageName}
 
+object ${mainClass} {
+  def main(args: Array[String]): Unit = {
+    println("OK")
+  }
 }
