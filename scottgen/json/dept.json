@@ -1,0 +1,22 @@
+[
+  {
+    "empno": 10,
+    "loc": "NEW YORK",
+    "dname": "ACCOUNTING"
+  },
+  {
+    "empno": 20,
+    "loc": "DALLAS",
+    "dname": "RESEARCH"
+  },
+  {
+    "empno": 30,
+    "loc": "CHICAGO",
+    "dname": "SALES"
+  },
+  {
+    "empno": 40,
+    "loc": "BOSTON",
+    "dname": "OPERATIONS"
+  }
+]
