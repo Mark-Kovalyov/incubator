@@ -31,7 +31,11 @@ public class ScalaTemplate extends GenericTemplate {
 
     @Override
     public String resourceDomain() {
-        return "scala";
+        if (cli.hasOption("z")) {
+            return "scala.zio";
+        } else {
+            return "scala";
+        }
     }
 
     @Override
