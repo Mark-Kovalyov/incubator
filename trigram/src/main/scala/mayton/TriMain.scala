@@ -2,14 +2,14 @@ package mayton
 
 import com.google.common.math.Quantiles.percentiles
 
-import java.io.{FileInputStream, FileWriter, PrintWriter}
+import java.io.{FileWriter, PrintWriter}
 import java.util
-import java.util.{Properties, StringJoiner}
+import java.util.StringJoiner
 import scala.collection.{IndexedSeq, mutable}
 import scala.io.Source.fromFile
 import scala.jdk.CollectionConverters.*
 import scala.jdk.StreamConverters.*
-import scala.math.*
+import scala.math._
 
 object TriMain {
 
@@ -58,10 +58,7 @@ object TriMain {
 
   def main(args:Array[String]) : Unit = {
 
-    val props = new Properties()
-    props.load(new FileInputStream("trigram.properties"))
-
-    val lines : Iterator[String] = fromFile(props.get("input").asInstanceOf[String]).getLines
+    val lines : Iterator[String] = fromFile("/bigdata/sftp-sync/logs/ftp-sync.log").getLines
     var sum = 0
     var rows = 0
 

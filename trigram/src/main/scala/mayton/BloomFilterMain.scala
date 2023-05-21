@@ -1,32 +1,16 @@
 package mayton
 
-import java.io.Externalizable
-import scala.math.*
+import scala.math._
 import scala.annotation.tailrec
 
 object BloomFilterMain extends App:
-
-  def bisect_search[T](a:List[T], x:T)(implicit o:Ordered[T]) : Option[T] = {
-    val n = a.length
-    var L = 0
-    var R = n - 1
-    while L <= R do
-      m = ((L + R) / 2)
-      if (o.compare(a(m),x)) {
-        L = m + 1
-      } else if (a(m) > x) {
-        R = m - 1
-      }else {
-        return Some(m)
-      }
-    None
-  }
 
 
   @tailrec
   def hrfs(i: BigInt, m: List[String] = List("BYTES", "K", "M", "G", "T", "P", "Z")): String = {
     if (i < 1024 || m.tail == Nil) "" + i + " " + m.head else hrfs(i / 1024, m.tail)
   }
+
 
   enum BloomResult:
     case PROBABLE_YES, EXACTLY_NO
@@ -37,11 +21,8 @@ object BloomFilterMain extends App:
     def exists(key: K): BloomResult
 
     def count: Int
-    
-  trait BatchBloom[K]:
-    def add_batch(keys : Seq[K]) : Long
 
-  class FlexibleBloomFilter extends BloomFilter[String] with Externalizable:
+  class FlexibleBloomFilter extends BloomFilter[String]:
     var cnt = 0
 
     override def put(key: String): Unit = {}
