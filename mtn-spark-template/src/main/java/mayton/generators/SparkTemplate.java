@@ -68,7 +68,7 @@ public class SparkTemplate extends GenericTemplate {
     }
 
     public static void main(String[] args) throws IOException, ParseException {
-        new SparkTemplate(args).go();
+        new SparkTemplate(args).generate();
     }
 
 }

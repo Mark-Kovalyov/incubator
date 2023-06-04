@@ -10,10 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -22,24 +19,56 @@ import static org.apache.commons.lang3.StringUtils.replace;
 
 public abstract class GenericTemplate {
 
-    static final boolean IS_DEBUG = true;
+    static final boolean IS_DEBUG = System.getProperty("isDebug") == null
+            ? false
+            : Boolean.valueOf(System.getProperty("isDebug"));
 
     protected String packageName;
     protected String appName;
     protected String mainClass;
+    protected Options opt;
+    protected VelocityContext context = new VelocityContext();
 
     static Logger logger = LoggerFactory.getLogger("generic-template");
 
-    protected Options opt;
+    public static <T> List<Pair<T,T>> zip(List<T> a, List<T> b) {
+        return Collections.emptyList();
+    }
 
-    protected CommandLine cli;
+    public static <T> List<T> tail(List<T> a) {
+        return a.subList(1, a.size());
+    }
 
-    protected VelocityContext context = new VelocityContext();
+    public static <T> T[] toArray(List<T> a) {
+        return (T[]) a.toArray();
+    }
 
-    protected void afterCliParsedActions() {
-        packageName = cli.getOptionValue("company-name");
-        appName     = cli.getOptionValue("app-name");
-        mainClass   = cli.getOptionValue("main-class");
+    public static String hyphenToCamel(String hyphenString) {
+        if (hyphenString.isEmpty()) return "";
+        StringBuilder sb = new StringBuilder();
+        boolean upper = true;
+        for(char c : hyphenString.toLowerCase().toCharArray()) {
+            if (c == '-') {
+                upper = true;
+            } else {
+                if (upper) {
+                    sb.append(Character.toUpperCase(c));
+                    upper = false;
+                } else {
+                    sb.append(c);
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    public static String hyphenToCamel2(String hyphenString) {
+        switch (hyphenString) {
+            case "spark-template" : return "SparkTemplate";
+            case "java-template" : return "JavaTemplate";
+            default: return "";
+        }
+        /**/
     }
 
     public String appNameToClassName(String app) {
@@ -64,6 +93,10 @@ public abstract class GenericTemplate {
     }
 
     protected GenericTemplate() throws ParseException {
+
+    }
+
+    public void prepareOptions(String[] args) {
         opt = new Options();
         opt.addRequiredOption("a", "app-name", true, "External application name");
         opt.addRequiredOption("c", "company-name", true, "Company (package) name");
@@ -80,7 +113,7 @@ public abstract class GenericTemplate {
         }
     }
 
-    private VelocityEngine initVelocityEngine(boolean templatesInJar) {
+    private VelocityEngine initVelocityEngine() {
         VelocityEngine velocityEngine = new VelocityEngine();
         Properties properties = new Properties();
         if (IS_DEBUG) {
@@ -100,9 +133,18 @@ public abstract class GenericTemplate {
         return objects.isEmpty() ? objects : objects.subList(0, objects.size() - 1);
     }
 
-    private void goVelocity() {
+    public void generate(String[] args) throws ParseException {
+
+        logger.info("Parse command line. Add default options");
+
+        CommandLine cli = parseCommandLine(args, opt);
+
+        packageName = cli.getOptionValue("company-name");
+        appName     = cli.getOptionValue("app-name");
+        mainClass   = cli.getOptionValue("main-class");
+
         logger.info("start velocity");
-        VelocityEngine velocityEngine = initVelocityEngine(true);
+        VelocityEngine velocityEngine = initVelocityEngine();
         String destRoot = appName;
         Validate.notNull(cli, "Command line object must be initialized");
         String currentDomain = resourceDomain();
@@ -133,12 +175,6 @@ public abstract class GenericTemplate {
         });
     }
 
-    public void go() {
-        logger.info("start");
-        goVelocity();
-        logger.info("finished");
-    }
-
     public abstract String resourceDomain();
 
     public abstract List<Pair<String,String>> velocityTemplates(CommandLine cli);
@@ -147,11 +183,11 @@ public abstract class GenericTemplate {
 
     public abstract VelocityContext velocityContext(CommandLine cli);
 
-    public void printHelp() {
+    public void printHelp(Options opt) {
         new HelpFormatter().printHelp(usageHelp(), opt);
     }
 
-    public CommandLine parseCommandLine(String[] args) throws ParseException {
+    public CommandLine parseCommandLine(String[] args, Options opt) throws ParseException {
         Validate.notNull(opt, "Command line strings must not be null");
         return new DefaultParser().parse(opt, args);
     }

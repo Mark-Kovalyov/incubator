@@ -16,6 +16,7 @@ public class ${className} {
         private String empId;
         private String ename;
 
+
         public String getEmpId() {
             return empId;
         }

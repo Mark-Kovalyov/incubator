@@ -12,16 +12,17 @@ public class JavaTemplate extends GenericTemplate {
 
     static Logger logger = LoggerFactory.getLogger("java-template");
 
-    public JavaTemplate(String[] args) throws ParseException {
-        super();
+    protected JavaTemplate() throws ParseException {
+    }
+
+    @Override
+    public void generate(String[] args) throws ParseException {
         opt.addOption("s", "slf4j",          false, "SLF4j");
         opt.addOption("e", "slf4jext",       false, "SLF4j extensions");
         if (args.length == 0) {
-            printHelp();
+            printHelp(opt);
             System.exit(1);
         } else {
-            cli = parseCommandLine(args);
-            afterCliParsedActions();
             logger.info("packageName : {}, appName : {}, mainClass : {}", packageName, appName, mainClass);
         }
     }
@@ -60,10 +61,5 @@ public class JavaTemplate extends GenericTemplate {
         return context;
     }
 
-
-
-    public static void main(String[] args) throws Exception {
-        new JavaTemplate(args).go();
-    }
 
 }

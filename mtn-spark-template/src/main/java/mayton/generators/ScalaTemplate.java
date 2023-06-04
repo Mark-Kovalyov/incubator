@@ -15,16 +15,18 @@ public class ScalaTemplate extends GenericTemplate {
 
     static Logger logger = LoggerFactory.getLogger("scala-template");
 
-    public ScalaTemplate(String[] args) throws ParseException {
+    public ScalaTemplate() throws ParseException {
         super();
+    }
+
+    @Override
+    public void generate(String[] args) throws ParseException {
         opt.addOption("z",  "zio",          false, "Support ZIO");
         opt.addOption("ca", "cats",         false, "Support cats effects");
         if (args.length == 0) {
-            printHelp();
+            printHelp(opt);
             System.exit(1);
         } else {
-            cli = parseCommandLine(args);
-            afterCliParsedActions();
             logger.info("packageName : {}, appName : {}, mainClass : {}", packageName, appName, mainClass);
         }
     }
@@ -74,9 +76,9 @@ public class ScalaTemplate extends GenericTemplate {
     public static void main(String[] args) throws IOException, ParseException {
         if (IS_DEBUG) {
             String[] a2 = {"-a", "zio-cats-demo", "-c", "mayton.scala", "-m", "ZioCatsDemo", "-z"};
-            new ScalaTemplate(a2).go();
+            new ScalaTemplate(a2).generate();
         } else {
-            new ScalaTemplate(args).go();
+            new ScalaTemplate(args).generate();
         }
         logger.info("Done");
     }

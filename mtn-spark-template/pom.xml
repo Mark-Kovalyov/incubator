@@ -20,56 +20,10 @@
 
   <profiles>
     <profile>
-      <id>java-kafka-producer</id>
+      <id>template</id>
       <properties>
-        <main.class.name>mayton.generators.kafka.JavaKafkaProducerTemplate</main.class.name>
-        <jar.name>java-kafka-producer-template</jar.name>
-      </properties>
-    </profile>
-    <profile>
-      <id>scala</id>
-      <properties>
-        <main.class.name>mayton.generators.ScalaTemplate</main.class.name>
-        <jar.name>scala-template</jar.name>
-      </properties>
-    </profile>
-    <profile>
-      <id>cosmos</id>
-      <properties>
-        <main.class.name>mayton.generators.CosmosDbTemplate</main.class.name>
-        <jar.name>cosmos-db-template</jar.name>
-      </properties>
-    </profile>
-    <profile>
-      <id>java</id>
-      <properties>
-        <main.class.name>mayton.generators.JavaTemplate</main.class.name>
-        <jar.name>java-template</jar.name>
-      </properties>
-    </profile>
-    <profile>
-      <id>java-jdbc</id>
-      <properties>
-        <main.class.name>mayton.generators.JavaJdbcTemplate</main.class.name>
-        <jar.name>java-jdbc-template</jar.name>
-      </properties>
-    </profile>
-    <profile>
-      <id>java-jdbc-hikari</id>
-      <properties>
-        <main.class.name>mayton.generators.JavaHiakriTemplate</main.class.name>
-        <jar.name>java-jdbc-hikari-template</jar.name>
-      </properties>
-    </profile>
-    <profile>
-      <id>spark</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <main.class.name>mayton.generators.SparkTemplate</main.class.name>
-        <jar.name>spark-template</jar.name>
-
+        <main.class.name>mayton.generators.Template</main.class.name>
+        <jar.name>template</jar.name>
       </properties>
     </profile>
   </profiles>

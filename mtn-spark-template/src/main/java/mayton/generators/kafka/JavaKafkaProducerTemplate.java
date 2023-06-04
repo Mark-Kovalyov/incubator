@@ -88,7 +88,7 @@ public class JavaKafkaProducerTemplate extends GenericTemplate {
     }
 
     public static void main(String[] args) throws Exception {
-        new JavaKafkaProducerTemplate(args).go();
+        new JavaKafkaProducerTemplate(args).generate();
     }
 
 }

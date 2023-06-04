@@ -9,11 +9,14 @@ import org.apache.velocity.VelocityContext;
 import java.util.Arrays;
 import java.util.List;
 
-public class JavaJdbcTemplate extends GenericTemplate {
+public class JavaHikariTemplate extends GenericTemplate {
 
-    protected JavaJdbcTemplate(String[] args) throws ParseException {
-
+    protected JavaHikariTemplate(String[] args) throws ParseException {
         super();
+        init(args);
+    }
+
+    protected void init(String[] args) {
         opt.addOption("s", "slf4j",          false, "SLF4j");
         opt.addOption("e", "slf4jext",       false, "SLF4j extensions");
         opt.addOption("j", "jdbc-driver",    false, "JDBC driver");
@@ -30,7 +33,7 @@ public class JavaJdbcTemplate extends GenericTemplate {
 
     @Override
     public String resourceDomain() {
-        return "java.jdbc";
+        return "java.jdbc.hikari";
     }
 
     @Override
@@ -43,12 +46,11 @@ public class JavaJdbcTemplate extends GenericTemplate {
     @Override
     public String usageHelp() {
         return "Java template generator 1.0\n" +
-                "Usage : java -jar java-jdbc-template-*.jar";
+                "Usage : java -jar java-jdbc-hikari-template-*.jar";
     }
 
     @Override
     public VelocityContext velocityContext(CommandLine cli) {
-        VelocityContext context = new VelocityContext();
         context.put("javaVersion",   "11");
         context.put("appName", appName);
         context.put("organization", packageName);
@@ -60,6 +62,5 @@ public class JavaJdbcTemplate extends GenericTemplate {
         if (cli.hasOption("slf4jext"))       context.put("slf4jext",       Boolean.TRUE);
         return context;
     }
-
 
 }

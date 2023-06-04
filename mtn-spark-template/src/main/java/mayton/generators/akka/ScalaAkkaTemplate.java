@@ -16,8 +16,11 @@ public class ScalaAkkaTemplate extends GenericTemplate {
 
     static Logger logger = LoggerFactory.getLogger("scala-akka-template");
 
-    protected ScalaAkkaTemplate(String[] args) throws ParseException {
-        super();
+    protected ScalaAkkaTemplate() throws ParseException {
+    }
+
+    @Override
+    public void prepareOptions(String[] args) {
         opt.addOption("s", "slf4j",          false, "SLF4j");
         opt.addOption("e", "slf4jext",       false, "SLF4j extensions");
         opt.addOption("j", "jdbc-driver",    false, "JDBC driver");
@@ -28,8 +31,6 @@ public class ScalaAkkaTemplate extends GenericTemplate {
             new HelpFormatter().printHelp(usageHelp(), opt);
             System.exit(1);
         } else {
-            cli = parseCommandLine(args);
-            afterCliParsedActions();
             logger.info("packageName : {}, appName : {}, mainClass : {}", packageName, appName, mainClass);
         }
     }
@@ -53,6 +54,7 @@ public class ScalaAkkaTemplate extends GenericTemplate {
 
     @Override
     public VelocityContext velocityContext(CommandLine cli) {
+        VelocityContext context = new VelocityContext();
         context.put("javaVersion",   "11");
         context.put("appName", appName);
         context.put("organization", packageName);
@@ -64,4 +66,6 @@ public class ScalaAkkaTemplate extends GenericTemplate {
         if (cli.hasOption("slf4jext"))       context.put("slf4jext",       Boolean.TRUE);
         return context;
     }
+
+
 }
