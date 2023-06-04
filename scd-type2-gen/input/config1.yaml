@@ -1,0 +1,11 @@
+# Types
+
+scd-type2-gen:
+  engine: pg
+  inputs:
+    snapshot_table:
+      name: emp
+      fields:
+        - { empno : integer }
+        - { ename : text }
+      primary_keys: [empno]
