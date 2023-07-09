@@ -1,0 +1,64 @@
+{
+  "type": "record",
+  "name": "AvroHttpRequest",
+  "namespace": "com.baeldung.avro",
+  "fields": [
+    {
+      "name": "requestTime",
+      "type": "long"
+    },
+    {
+      "name": "clientIdentifier",
+      "type": {
+        "type": "record",
+        "name": "emp",
+        "namespace": "com.oracle.scott",
+        "fields": [
+          {
+            "name": "empid",
+            "type": "string"
+          },
+          {
+            "name": "opt_ename",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "sal",
+            "type": "double"
+          },
+          {
+            "name": "comm",
+            "type": [
+              "null",
+              "double"
+            ],
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "employeeNames",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": []
+    },
+    {
+      "name": "active",
+      "type": {
+        "type": "enum",
+        "name": "Active",
+        "symbols": [
+          "YES",
+          "NO"
+        ]
+      }
+    }
+  ]
+}

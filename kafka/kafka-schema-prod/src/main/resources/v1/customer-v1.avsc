@@ -1,0 +1,12 @@
+[
+  {
+    "namespace":"mayton.kafka",
+    "type" : "record",
+    "name" : "Customer",
+    "fields" : [
+      { "name" : "customerId",   "type" : "int" },
+      { "name" : "customerName", "type" : "string" },
+      { "name" : "faxNumber",    "type" : ["string", "null" ], "default" : "null" }
+    ]
+  }
+]

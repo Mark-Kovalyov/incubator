@@ -26,8 +26,8 @@ public class JavaKafkaProducerTemplate extends GenericTemplate {
             new HelpFormatter().printHelp(usageHelp(), opt);
             System.exit(1);
         } else {
-            cli = parseCommandLine(args);
-            afterCliParsedActions();
+            /*cli = parseCommandLine(args);
+            afterCliParsedActions();*/
             context.put("javaVersion", "11");
             context.put("appName", appName);
             context.put("organization", packageName);

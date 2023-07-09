@@ -73,7 +73,7 @@ public class ScalaTemplate extends GenericTemplate {
         return context;
     }
 
-    public static void main(String[] args) throws IOException, ParseException {
+    /*public static void main(String[] args) throws IOException, ParseException {
         if (IS_DEBUG) {
             String[] a2 = {"-a", "zio-cats-demo", "-c", "mayton.scala", "-m", "ZioCatsDemo", "-z"};
             new ScalaTemplate(a2).generate();
@@ -81,6 +81,6 @@ public class ScalaTemplate extends GenericTemplate {
             new ScalaTemplate(args).generate();
         }
         logger.info("Done");
-    }
+    }*/
 
 }

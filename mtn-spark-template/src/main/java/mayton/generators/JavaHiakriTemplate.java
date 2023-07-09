@@ -12,7 +12,10 @@ import java.util.List;
 
 public class JavaHiakriTemplate extends GenericTemplate {
 
-    protected JavaHiakriTemplate(String[] args) throws ParseException {
+    protected JavaHiakriTemplate() throws ParseException {
+    }
+
+    /*protected JavaHiakriTemplate(String[] args) throws ParseException {
         super();
         opt.addOption("s", "slf4j",          false, "SLF4j");
         opt.addOption("e", "slf4jext",       false, "SLF4j extensions");
@@ -28,7 +31,7 @@ public class JavaHiakriTemplate extends GenericTemplate {
             afterCliParsedActions();
             logger.info("packageName : {}, appName : {}, mainClass : {}", packageName, appName, mainClass);
         }
-    }
+    }*/
 
     @Override
     public String resourceDomain() {
@@ -62,8 +65,8 @@ public class JavaHiakriTemplate extends GenericTemplate {
         return context;
     }
 
-    public static void main(String[] args) throws Exception {
+/*    public static void main(String[] args) throws Exception {
         new JavaHiakriTemplate(args).go();
-    }
+    }*/
 
 }
