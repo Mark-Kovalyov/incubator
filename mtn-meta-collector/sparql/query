@@ -1,0 +1,13 @@
+#!/bin/bash
+
+for i in *.rq; do
+ tdbquery \
+  --verbose \
+  --time \
+  --loc /bigdata/semantic/tdb/music-2021-03-05 \
+  --explain \
+  --optimize=on \
+  --results=CSV \
+  --base="http://file.org#" \
+  --file="$i" | tr -d '\r' > "$i.csv"
+done;
