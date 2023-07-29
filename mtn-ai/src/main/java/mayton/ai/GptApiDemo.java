@@ -3,6 +3,7 @@ package mayton.ai;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -17,24 +18,20 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class GptApiDemo {
 
     static Logger logger = LoggerFactory.getLogger("gpt-api-demo");
 
-    static String GPT_KEY    = System.getenv("GPT_KEY");
-    static String GPT_ORG_ID = System.getenv("GPT_ORG_ID");
-
-
-
-    public static List<String> models(HttpClient httpClient) throws URISyntaxException, IOException, InterruptedException {
+    public static List<String> models(HttpClient httpClient, String key) throws URISyntaxException, IOException, InterruptedException {
 
         List<String> res = new ArrayList<>();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI("https://api.openai.com/v1/models"))
-                .setHeader("Authorization", "Bearer " + GPT_KEY)
-                .setHeader("OpenAI-Organization", GPT_ORG_ID)
+                .setHeader("Authorization", "Bearer " + key)
+                //.setHeader("OpenAI-Organization", GPT_ORG_ID)
                 .GET()
                 .build();
 
@@ -53,15 +50,15 @@ public class GptApiDemo {
         return res;
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
+    public static void main(String[] args) throws Throwable {
 
-        Uniconf uniconf = new Uniconf("app.properties");
+        Uniconf uniconf = new Uniconf();
 
-        logger.info("GPT_KEY    = {}", uniconf.lookupProperty("GPT_KEY").orElseThrow());
-        logger.info("GPT_ORG_ID = {}", uniconf.lookupProperty("GPT_ORG_ID").orElseThrow());
+        String key = uniconf.lookupProperty("GPT_KEY").orElseThrow(() -> new Throwable("Cannot get key"));
 
-        System.out.printf("GPT_KEY       = %s\n", uniconf.lookupProperty("GPT_KEY").orElseThrow());
-        System.out.printf("GPT_ORG_ID    = %s\n", uniconf.lookupProperty("GPT_ORG_ID").orElseThrow());
+        logger.info("GPT_KEY    = {}", key);
+
+        System.out.printf("GPT_KEY       = %s\n", key);
 
 
 
@@ -70,7 +67,7 @@ public class GptApiDemo {
                 .build();
 
 
-        List<String> models = models(httpClient);
+        List<String> models = models(httpClient, key);
 
 
         for(String m : models.stream().sorted().collect(Collectors.toList())) {

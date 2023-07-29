@@ -1,0 +1,20 @@
+ Volume in drive C is Windows
+ Volume Serial Number is E475-8763
+
+ Directory of C:\git\mtn-ip2loc
+
+07/07/2023  06:57 PM    <DIR>          .
+07/07/2023  06:57 PM    <DIR>          ..
+07/06/2023  01:03 AM               490 .gitignore
+07/07/2023  06:04 PM    <DIR>          .idea
+07/07/2023  05:52 PM    <DIR>          logs
+07/06/2023  09:38 PM               189 Makefile
+07/07/2023  06:57 PM                 0 out
+07/07/2023  06:07 PM             2,176 pom.xml
+07/06/2023  06:08 PM               661 readme.md
+07/07/2023  05:44 PM               227 run.cmd
+07/06/2023  01:03 AM    <DIR>          src
+07/06/2023  11:55 PM    <DIR>          target
+07/07/2023  06:51 PM        12,985,997 udp-enriched.csv
+               7 File(s)     12,989,740 bytes
+               6 Dir(s)  143,712,731,136 bytes free
