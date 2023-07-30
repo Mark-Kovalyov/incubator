@@ -3,3 +3,5 @@
 .idea/
 target/
 *.jar
+dependency-reduced-pom.xml
+nohup.out

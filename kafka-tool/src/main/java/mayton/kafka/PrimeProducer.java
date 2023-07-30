@@ -1,6 +1,5 @@
 package mayton.kafka;
 
-import mayton.network.NetworkUtils;
 import org.apache.commons.cli.*;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -11,13 +10,12 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Instant;
 import java.util.Properties;
 import java.util.Random;
 
 public class PrimeProducer {
 
-    public static Logger logger = LoggerFactory.getLogger(UdpProducer.class);
+    public static Logger logger = LoggerFactory.getLogger("prime-producer");
 
     public static Options createOptions() {
         return new Options()
@@ -26,9 +24,8 @@ public class PrimeProducer {
     }
 
     static boolean isPrime(int n) {
-        if (n / 2 == 0) return false;
-        if (n == 1 || n == 3) return true;
-        for(int i = 2;i<n/2;i++) {
+        int mx = (int) Math.sqrt(n);
+        for (int i = 2; i <= (mx + 1); i++) {
             if (n % i == 0) return false;
         }
         return true;
@@ -68,7 +65,7 @@ public class PrimeProducer {
         try(KafkaProducer<String, String> producer = new KafkaProducer<>(properties)) {
             ProducerRecord<String, String> kafkaRecord;
             try {
-                for(int i = 2; i < Integer.MAX_VALUE;i++) {
+                for(int i = 3; i < Integer.MAX_VALUE;i+=2) {
                     if (isPrime(i)) {
                         kafkaRecord = new ProducerRecord(
                                 topic,

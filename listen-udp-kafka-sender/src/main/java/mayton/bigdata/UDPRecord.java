@@ -1,4 +1,4 @@
-package mayton.kafka;
+package mayton.bigdata;
 
 public class UDPRecord {
 
