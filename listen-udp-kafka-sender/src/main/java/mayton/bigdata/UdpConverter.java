@@ -1,5 +1,6 @@
 package mayton.bigdata;
 
+import mayton.network.dht.DhtUdpPacket;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -14,10 +15,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
 import java.util.Iterator;
 import java.util.Properties;
-import java.util.Random;
 
 public class UdpConverter {
 
@@ -34,12 +33,6 @@ public class UdpConverter {
         logger.info("Start");
         InputStream is = System.in;
 
-        // 2023-06-29 23:44:00.500;
-        // 31.163.107.*;
-        // 24437;
-        // tr;
-        // 20;
-        // 4100CC48491B55210000000000100000DF720000
         CSVParser parser = CSVParser.parse(is, StandardCharsets.UTF_8, CSVFormat.newFormat(';'));
 
         Properties properties = new Properties();
@@ -49,8 +42,8 @@ public class UdpConverter {
         properties.put("acks",             acks);
         properties.put("retries",          "0");
 
-        try(KafkaProducer<String, UDPRecord> producer = new KafkaProducer<>(properties)) {
-            ProducerRecord<String, UDPRecord> kafkaRecord;
+        try(KafkaProducer<String, DhtUdpPacket> producer = new KafkaProducer<>(properties)) {
+            ProducerRecord<String, DhtUdpPacket> kafkaRecord;
             Iterator<CSVRecord> it = parser.stream().iterator();
             try {
                 while(it.hasNext()) {
@@ -61,7 +54,7 @@ public class UdpConverter {
                     String tag     = rec.get(3);
                     String length  = rec.get(4);
                     String udpBody = rec.get(5);
-                    UDPRecord udpRecord = new UDPRecord(ts,ip,Integer.parseInt(port), tag, Integer.parseInt(length), udpBody);
+                    DhtUdpPacket udpRecord = new DhtUdpPacket(ts,ip,Integer.parseInt(port), tag, Integer.parseInt(length), udpBody);
                     String key = tag + "/" + ts;
                     kafkaRecord = new ProducerRecord(
                             topic,

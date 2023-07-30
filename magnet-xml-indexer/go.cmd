@@ -1,0 +1,1 @@
+mvn compile exec:java -Dexec.mainClass="mayton.bigdata.MagnetXmlIndexer" -Dexec.args="c:/books magnet-xml-indexer"
