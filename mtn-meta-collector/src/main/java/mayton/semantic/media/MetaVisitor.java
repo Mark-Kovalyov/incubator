@@ -69,29 +69,7 @@ public class MetaVisitor extends SimpleFileVisitor<Path> {
         requireNonNull(dir);
         requireNonNull(attrs);
         String dirName = dir.toString();
-        if (dirName.equals("/storage/music")) {
-            logger.warn("Enter subtree {}", dirName);
-            return FileVisitResult.CONTINUE;
-        } else if (dirName.startsWith("/storage/music/")) {
-            if (longJump) {
-                if (dirName.startsWith("/storage/music/Erik_Trufazz") ||
-                        dirName.startsWith("/storage/music/De-Phazz") ||
-                        dirName.startsWith("/storage/music/Glen Miller") ||
-                        dirName.startsWith("/storage/music/VA - Science Fiction Jazz vol.1-12 (1996-2010)") ||
-                        dirName.startsWith("/storage/music/John Coltrane - A Love Supreme (1964) [FLAC]")
-                ) {
-                    logger.info("Enter subtree {}", dirName);
-                    return FileVisitResult.CONTINUE;
-                } else {
-                    logger.warn("Skip subtree {}", dirName);
-                    return FileVisitResult.SKIP_SUBTREE;
-                }
-            } else {
-                return FileVisitResult.CONTINUE;
-            }
-        } else {
-            return FileVisitResult.SKIP_SUBTREE;
-        }
+        return FileVisitResult.CONTINUE;
     }
 
     private void processFileHeader(Path file, Resource idRes) {

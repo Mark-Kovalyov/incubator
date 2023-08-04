@@ -22,7 +22,8 @@ object Main {
       new SparkSqlGen("bigdata/spark-sql", empList(), deptList()),
       new PySparkGen("bigdata/spark", empList(), deptList()),
       new JsonGen("json", empList(), deptList()),
-      new JsonLevel2Gen("json", empList(), deptList())
+      new JsonLevel2Gen("json", empList(), deptList()),
+      new XmlGen("xml", empList(), deptList())
     )
 
     collection.foreach(item => item.go())

@@ -37,5 +37,7 @@ val rdd = spark.sparkContext.parallelize(data)
 
 val df = spark.createDataFrame(rdd, schema)
 
+df.createOrReplaceTempView("emp")
+
 df.show()
 

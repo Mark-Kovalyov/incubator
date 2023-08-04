@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<emps>
+<emp ename="SMITH />
+<emp ename="ALLEN />
+<emp ename="WARD />
+<emp ename="JONES />
+<emp ename="MARTIN />
+<emp ename="BLAKE />
+<emp ename="CLARK />
+<emp ename="SCOTT />
+<emp ename="KING />
+<emp ename="TURNER />
+<emp ename="ADAMS />
+<emp ename="JAMES />
+<emp ename="FORD />
+<emp ename="MILLER />
+</emps>

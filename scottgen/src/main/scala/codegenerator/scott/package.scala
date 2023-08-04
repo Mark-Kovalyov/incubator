@@ -39,6 +39,21 @@ package object scott {
     }
   }
 
+
+  class XmlGen(basePath: String, empList: List[Emp], deptList: List[Dept]) extends CodegenBase(basePath, empList, deptList) {
+    override def emp(): Unit = {
+      // TODO: Refactor with Jackson
+      val p: PrintWriter = new PrintWriter(new FileWriter(basePath + "/emp.xml"))
+      p.println("<?xml version=\"1.0\"?>")
+      p.println("<emps>")
+      empList.foreach(emp => {
+        p.print(s"<emp ename=\"${emp.ename}\" empno=\"${emp.empno}\" ")
+      })
+      p.println("</emps>")
+      p.close()
+    }
+  }
+
   class JsonLevel2Gen(basePath: String, empList: List[Emp], deptList: List[Dept]) extends CodegenBase(basePath, empList, deptList) {
     override def emp(): Unit = {
       import com.fasterxml.jackson.core._

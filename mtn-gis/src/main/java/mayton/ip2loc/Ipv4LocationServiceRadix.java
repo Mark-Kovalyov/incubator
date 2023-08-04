@@ -37,7 +37,7 @@ public class Ipv4LocationServiceRadix implements Ipv4locationService {
 
     private Ipv4LocationServiceRadix() {
         Uniconf uniconf = new Uniconf();
-        String path = uniconf.lookupProperty("Ipv4LocationServiceRadixPath").orElseThrow();
+        String path = uniconf.lookupProperty("ipv4LocationServiceRadixPath").orElseThrow();
         logger.info("path = {}", path);
         try {
             logger.info("constructor");
