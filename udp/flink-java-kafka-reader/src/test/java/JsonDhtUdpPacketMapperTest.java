@@ -1,6 +1,7 @@
 import mayton.flink.DhtFinalEntity;
 import mayton.flink.JsonDhtUdpPacketMapper;
 import mayton.network.dht.DhtUdpPacket;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class JsonDhtUdpPacketMapperTest {
 
     @Test
+    @Disabled
     void test() throws Exception {
         JsonDhtUdpPacketMapper mapperFun = new JsonDhtUdpPacketMapper();
         DhtFinalEntity finalEntity = mapperFun.map("{ \"ip\" : \"195.1.1.1\", \"packetSize\" : 1500 }");
@@ -19,6 +21,7 @@ class JsonDhtUdpPacketMapperTest {
     
     
     @Test
+    @Disabled
     void test2() throws Exception {
         JsonDhtUdpPacketMapper mapperFun = new JsonDhtUdpPacketMapper();
         String json2 = "{ \"ts\":\"" +

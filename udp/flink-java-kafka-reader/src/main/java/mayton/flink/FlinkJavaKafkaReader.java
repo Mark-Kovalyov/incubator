@@ -1,5 +1,6 @@
 package mayton.flink;
 
+import mayton.lib.Uniconf;
 import mayton.network.dht.DhtUdpPacket;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 
@@ -21,10 +22,13 @@ import org.apache.flink.streaming.api.windowing.triggers.CountTrigger;
 import org.apache.flink.streaming.api.windowing.windows.GlobalWindow;
 import org.apache.flink.streaming.util.keys.KeySelectorUtil;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.postgresql.util.PGobject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Types;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class FlinkJavaKafkaReader {
@@ -34,18 +38,26 @@ public class FlinkJavaKafkaReader {
 	static String BROKERS = "localhost:9092";
 	static String TOPIC   = "udp";
 
-	static String JDBC_SQLITE        = "jdbc:sqlite:/mnt/c/db/sqlite/flink-java-kafka-reader.db";
+	static String JDBC_SQLITE        = "jdbc:sqlite:/bigdata/sqlite/flink-java-kafka-reader/flink-java-kafka-reader.db";
 	static String DRIVER_NAME_SQLITE = "org.sqlite.JDBC";
+
 
 	static String TEMP = System.getProperty("java.io.tmpdir");
 
-	public static void initSQL(String jdbcUrl, String driver) {
+	public static void initSQL(String jdbcUrl, String driver) throws SQLException {
+		Connection connection = DriverManager.getConnection(jdbcUrl);
+		Statement st = connection.createStatement();
 
+		connection.close();
 	}
 
 	public static void main(String[] args) throws Exception {
 
-		initSQL(JDBC_SQLITE, DRIVER_NAME_SQLITE);
+		Uniconf uniconf = new Uniconf();
+
+		String JDBC_URL            = uniconf.lookupProperty("flinkJavaKafkaReader.jdbcUrl",	   "jdbc:postgresql://localhost:5432/udpdb");
+		String DRIVER_NAME         = uniconf.lookupProperty("flinkJavaKafkaReader.driverName", "org.postgresql.Driver");
+		String PWD                 = uniconf.lookupProperty("flinkJavaKafkaReader.pwd",        "*******");
 
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -65,16 +77,12 @@ public class FlinkJavaKafkaReader {
 				"udp datasource");
 
 		DataStream<DhtFinalEntity> entityDataStream = dataStreamSource.map(new JsonDhtUdpPacketMapper())
-				.name("JSON to DHT converter");
+				.name("JSON to DHT converter")
+				.setParallelism(1);
 
-/*		SingleOutputStreamOperator<DhtFinalEntity> operator = entityDataStream
-				.keyBy("ip")
-				.window(SlidingEventTimeWindows.of(Time.hours(24), Time.minutes(15)))
-				.apply()*/
-				//.<windowed transformation>(<window function>);
+		DataStream<DhtFinalEntity> dnsEnriched = entityDataStream.map(new RocksDbDnsEnricher())
+				.name("Rev Rocks DB-DNS enricher");
 
-		DataStream<DhtFinalEntity> dnsEnriched = entityDataStream.map(new RevDnsEnricher())
-				.name("Rev DNS enricher");
 
 		DataStream<DhtFinalEntity> dhtEventDecoded = dnsEnriched.map(new DhtEventDecoder())
 						.name("DHT event decode");
@@ -91,17 +99,26 @@ public class FlinkJavaKafkaReader {
 						statement.setInt(5, entity.getPacketSize());
 						statement.setString(6, entity.getPacketBody());
 						statement.setString(7, finalentity.getPtr());
-						statement.setString(8, finalentity.getDhtDecodedJson());
-
+						if (DRIVER_NAME.equals("org.postgresql.Driver")) {
+							PGobject jsonObject = new PGobject();
+							jsonObject.setType("json");
+							jsonObject.setValue(finalentity.getDhtDecodedJson());
+							statement.setObject(8, jsonObject);
+						} else {
+							statement.setString(8, finalentity.getDhtDecodedJson());
+						}
 					},
 					JdbcExecutionOptions.builder().withBatchIntervalMs(3000).build(),
 					new JdbcConnectionOptions.JdbcConnectionOptionsBuilder()
-							.withUrl(JDBC_SQLITE)
-							.withDriverName(DRIVER_NAME_SQLITE)
-							.withUsername("sa")
+							.withUrl(JDBC_URL)
+							.withDriverName(DRIVER_NAME)
+							.withUsername("mayton")
+							.withPassword(PWD)
 							.build())
-		).name("SQLite");
+		).name("Postgres");
 
-		env.execute("flink-java-kafka-reader-10");
+		LocalDateTime localDateTime = LocalDateTime.now();
+
+		env.execute("flink-java-kafka-reader-" + localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm")));
 	}
 }

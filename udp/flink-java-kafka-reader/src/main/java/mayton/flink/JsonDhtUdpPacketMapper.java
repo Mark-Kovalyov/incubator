@@ -1,6 +1,7 @@
 package mayton.flink;
 
 import mayton.network.dht.DhtUdpPacket;
+import org.apache.flink.api.common.accumulators.IntCounter;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.functions.RichMapFunction;
 import org.apache.flink.configuration.Configuration;
@@ -24,19 +25,17 @@ public class JsonDhtUdpPacketMapper extends RichMapFunction<String, DhtFinalEnti
 
     static Logger logger = LoggerFactory.getLogger("json-dht-pack-map");
 
-    private transient Counter counter;
-    private transient Counter errcounter;
-    private transient Meter meter;
+    private IntCounter dhtDecoded = new IntCounter();
+    private IntCounter dhtUnknown = new IntCounter();
 
     @Override
     public DhtFinalEntity map(String dhtUdpPacketJson) throws Exception {
         try {
             DhtUdpPacket retval = objectMapper.readValue(dhtUdpPacketJson, DhtUdpPacket.class);
-            meter.markEvent();
-            counter.inc();
+            dhtDecoded.add(1);
             return new DhtFinalEntity(retval);
         } catch (Exception ex) {
-            errcounter.inc();
+            dhtUnknown.add(1);
             logger.error("Exception {}", ex.getMessage());
             return DhtFinalEntity.emptyEntity();
         }
@@ -44,10 +43,8 @@ public class JsonDhtUdpPacketMapper extends RichMapFunction<String, DhtFinalEnti
 
     @Override
     public void open(Configuration parameters) throws Exception {
-        MetricGroup mg = getRuntimeContext().getMetricGroup().addGroup("mayton_json_dht");
-        errcounter = mg.counter("err_counter");
-        counter = mg.counter("counter");
-        meter = mg.meter("meter", new MeterView(counter));
         objectMapper = JacksonMapperFactory.createObjectMapper();
+        getRuntimeContext().addAccumulator("dht_decoded", dhtDecoded);
+        getRuntimeContext().addAccumulator("dht_unknown", dhtUnknown);
     }
 }

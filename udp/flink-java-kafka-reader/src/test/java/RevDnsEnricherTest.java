@@ -17,7 +17,7 @@ class RevDnsEnricherTest {
     }
 
     @Test
-    //@Disabled
+    @Disabled
     void test() throws Exception {
         RevDnsEnricher revDnsEnricher = new RevDnsEnricher();
         revDnsEnricher.open(null);

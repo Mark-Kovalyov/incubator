@@ -11,11 +11,5 @@ create table dht_messages(
     decoded_event text
 );
 
-drop table top_ips;
-
-create table top_ips(
-    ip text,
-    ip_count int
-);
 
 

@@ -7,6 +7,8 @@ init-h2:
 	java -jar /mnt/c
 
 init-sqlite:
-	mkdir -p /mnt/c/db/sqlite
-	sqlite3 --init sql/01.sql /mnt/c/db/sqlite/flink-java-kafka-reader.db
+	mkdir -p /bigdata/sqlite/flink-java-kafka-reader/
+	sqlite3 --init sql/01.sql /bigdata/sqlite/flink-java-kafka-reader/flink-java-kafka-reader.db
 
+init-pg:
+	psql -d dht
