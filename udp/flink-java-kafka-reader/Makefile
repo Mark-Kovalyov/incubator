@@ -1,6 +1,10 @@
 run:
-	mvn clean package
-	flink run  --detached target/flink-java-kafka-reader-1.0.jar
+	mvn clean package -Pkafkareader
+	flink run --detached target/kafkareader.jar
+
+dummy:
+	mvn clean package -Pdummy
+	flink run --detached target/dummy.jar
 
 init-h2:
 	mkdir -p /mnt/c/db/h2

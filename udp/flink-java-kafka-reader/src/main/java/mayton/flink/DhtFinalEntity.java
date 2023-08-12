@@ -1,5 +1,6 @@
 package mayton.flink;
 
+import mayton.ip2loc.Ipv4Loc;
 import mayton.network.NetworkUtils;
 import mayton.network.dht.DhtUdpPacket;
 
@@ -51,6 +52,7 @@ public class DhtFinalEntity implements Serializable {
     private DhtUdpPacket packet;
     private String ptr;
     private String dhtDecodedJson;
+    private Ipv4Loc ipv4Loc;
 
     public DhtFinalEntity(DhtUdpPacket packet) {
         this.packet = packet;
@@ -81,5 +83,13 @@ public class DhtFinalEntity implements Serializable {
 
     public void setDhtDecodedJson(String dhtDecodedJson) {
         this.dhtDecodedJson = dhtDecodedJson;
+    }
+
+    public Ipv4Loc getIpv4Loc() {
+        return ipv4Loc;
+    }
+
+    public void setIpv4Loc(Ipv4Loc ipv4Loc) {
+        this.ipv4Loc = ipv4Loc;
     }
 }

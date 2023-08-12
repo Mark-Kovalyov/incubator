@@ -1,5 +1,6 @@
-package mayton.flink;
+package mayton.flink.external;
 
+import mayton.flink.DhtFinalEntity;
 import mayton.network.dns.RocksDbDnsClient;
 import org.apache.flink.api.common.accumulators.IntCounter;
 import org.apache.flink.api.common.functions.RichMapFunction;
@@ -11,16 +12,16 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.Optional;
 
-public class RocksDbDnsEnricher extends RichMapFunction<DhtFinalEntity, DhtFinalEntity> implements Serializable {
+public class CachedDnsEnricher extends RichMapFunction<DhtFinalEntity, DhtFinalEntity> implements Serializable {
 
     private RocksDbDnsClient rocksDbDnsClient;
 
-    static Logger logger = LoggerFactory.getLogger("rocks-dns-enricher");
-    private IntCounter all = new IntCounter();
+    static Logger logger = LoggerFactory.getLogger(CachedDnsEnricher.class);
+
+    private IntCounter all        = new IntCounter();
     private IntCounter unresolved = new IntCounter();
 
     private transient long lag;
-
     private transient long cumLag;
 
     @Override
@@ -28,11 +29,11 @@ public class RocksDbDnsEnricher extends RichMapFunction<DhtFinalEntity, DhtFinal
         long threadId = Thread.currentThread().getId();
         String path = "/tmp/rocks-db-dns-enricher/" + threadId;
 
-        getRuntimeContext().addAccumulator("all", all);
-        getRuntimeContext().addAccumulator("unresolved", unresolved);
+        getRuntimeContext().addAccumulator("dns_all", all);
+        getRuntimeContext().addAccumulator("dns_unresolved", unresolved);
 
-        getRuntimeContext().getMetricGroup().gauge("lag", (Gauge<Long>) () -> lag);
-        getRuntimeContext().getMetricGroup().gauge("avg_lag", (Gauge<Long>) () -> cumLag / all.getLocalValue());
+        getRuntimeContext().getMetricGroup().gauge("dns_lag", (Gauge<Long>) () -> lag);
+        getRuntimeContext().getMetricGroup().gauge("dns_avg_lag", (Gauge<Long>) () -> cumLag / all.getLocalValue());
         rocksDbDnsClient = new RocksDbDnsClient(path);
         logger.info("Created rocksDbDnsClient with persistence {}", path);
     }
