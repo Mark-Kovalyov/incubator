@@ -25,7 +25,12 @@
         <dependency>
             <groupId>mayton.libs</groupId>
             <artifactId>network</artifactId>
-            <version>1.3.4-SNAPSHOT</version>
+            <version>1.9.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>mayton.libs</groupId>
+            <artifactId>encoders</artifactId>
+            <version>1.5-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -42,6 +47,11 @@
             <artifactId>commons-io</artifactId>
             <version>1.3.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.10.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -54,7 +64,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <Main-Class>mayton.bigdata.MagnetXmlIndexer</Main-Class>
+                            <Main-Class>mayton.bigdata.CSVIndexer</Main-Class>
                         </manifest>
                     </archive>
                     <finalName>magnet-xml-indexer</finalName>
