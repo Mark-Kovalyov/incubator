@@ -11,8 +11,8 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -25,12 +25,12 @@
         <dependency>
             <groupId>mayton.libs</groupId>
             <artifactId>network</artifactId>
-            <version>1.9.0-SNAPSHOT</version>
+            <version>[2.0,)</version>
         </dependency>
         <dependency>
             <groupId>mayton.libs</groupId>
             <artifactId>encoders</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>[2.2,)</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -70,6 +70,16 @@
                     <finalName>magnet-xml-indexer</finalName>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
 </project>

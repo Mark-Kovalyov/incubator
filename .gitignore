@@ -6,3 +6,10 @@ target/
 dependency-reduced-pom.xml
 nohup.out
 *.iml
+
+
+# BigData files
+
+*.csv
+*.orc
+*.parquet
