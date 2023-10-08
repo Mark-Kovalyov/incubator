@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns:l="http://www.w3.org/1999/xlink" xmlns="http://www.gribuser.ru/xml/fictionbook/2.0">
+    <description>
+        <title-info>
+            <genre>sf</genre>
+            <author>
+                <first-name>Александр</first-name>
+                <middle-name>Николаевич</middle-name>
+                <last-name>Громов</last-name>
+                <id>e55c8f77-2a80-102a-9ae1-2dfe723fe7c7</id>
+            </author>
+            <book-title>Первый из могикан</book-title>
+            <annotation>
+                <p>Матриархат будущего. Мир амазонок ХХIII столетия: мужчины порабощены, нет ни войн, ни кризисов.
+                    Человечество изжило опасность самоуничтожения. Что может ему угрожать?
+                </p>
+                <p>Опасность приходит из космоса. Земля, летящая вместе с Солнцем к созвездию Геркулеса, вторгается в
+                    область пространства, контролируемую другой цивилизацией. Невольные «агрессоры» подлежат тотальному
+                    уничтожению.
+                </p>
+                <p>Лишь один-единственный мужчина способен спасти цивилизацию. Но кто даст ему воспользоваться плодами
+                    победы? Победитель не нужен уже никому – и ему снова готовят участь раба!
+                </p>
+            </annotation>
+            <coverpage>
+                <image l:href="#cover.jpg"/>
+            </coverpage>
+            <lang>ru</lang>
+            <sequence name="Тысяча и один день" number="2"/>
+        </title-info>
+        <document-info>
+            <author>
+                <first-name/>
+                <last-name>MCat78</last-name>
+                <nickname>MCat78</nickname>
+                <email>MCat78@mail.ru</email>
+            </author>
+            <program-used>FB Tools, FB Editor v2.0, FB Writer v2.2</program-used>
+            <date value="2008-03-20">2008-03-20</date>
+            <src-url>http://www.litres.ru</src-url>
+            <src-ocr>Текст предоставлен издательством «Эксмо»</src-ocr>
+            <id>F01C8438-93D1-4770-A58E-B4AED0ED9D7B</id>
+            <version>2.01</version>
+            <history>
+                <p>v 2.0 – создание fb2-документа из издательского текста – (MCat78)</p>
+            </history>
+        </document-info>
+        <publish-info>
+            <book-name>Первый из могикан</book-name>
+            <publisher>Эксмо</publisher>
+            <city>Москва</city>
+            <year>2006</year>
+            <isbn>5-699-15149-4</isbn>
+            <sequence name="Русская фантастика" number="0"/>
+        </publish-info>
+        <custom-info info-type="fb2fix-status">Passed</custom-info>
+    </description>
+    <body>
+        <title>
+            <p>Александр Громов</p>
+            <p>Первый из могикан</p>
+        </title>
+        <section>
+            <title>
+                <p>Часть первая</p>
+                <p>Приговоренные</p>
+            </title>
+            <section>
+                <title>
+                    <p>1</p>
+                </title>
+                <p>Ее место в общем зачете было третьим. Девятьсот семьдесят очков против девятисот девяноста двух у
+                    Авдотьи Верхогляд и тысячи тринадцати у победительницы прошлогодних состязаний Марты Шлейхер. Очень
+                    большой разрыв перед последним упражнением. Шансов догнать соперниц у Ольги Вострецовой было
+                    немного.
+                </p>
+                <p>Зато шансов скатиться с призового места на четвертое, пятое и так далее было хоть отбавляй. Вслед за
+                    Ольгой шла плотная группа. Семнадцать спортсменок набрали свыше девятисот очков, шесть из них –
+                    более девятисот пятидесяти.
+                </p>
+            </section>
+        </section>
+    </body>
+    <binary content-type="image/jpeg" id="cover.jpg">/9j/==</binary>
+</FictionBook>
