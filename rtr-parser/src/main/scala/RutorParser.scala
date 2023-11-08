@@ -4,34 +4,31 @@ import scala.jdk.StreamConverters.*
 import scala.language.postfixOps
 import scala.math.Numeric.IntIsIntegral.sign
 import scala.math.abs
-
 import java.sql.{DriverManager, PreparedStatement}
 import java.time.{DateTimeException, LocalDate}
 import java.util.Locale
-
 import org.jsoup.*
 import org.jsoup.nodes.*
 import org.jsoup.select.*
 import org.slf4j.{Logger, LoggerFactory}
 import DHTTool.{extractOnlyBtihCode, fromBtihToMagnet}
 import RutorUtils.{extractDate, extractId}
-import mayton.lib.SofarTracker
+import mayton.lib.{SofarTracker, Uniconf}
 
 object RtrParse {
 
   val logger : Logger = LoggerFactory.getLogger("RtrParse")
 
-
   var batchCount = 0
   val BATCH_SIZE = 128
 
-  val rtrKafkaClient : RtrKafkaClient = new RtrKafkaClient()
+  //val rtrKafkaClient : RtrKafkaClient = new RtrKafkaClient()
 
-  def pushKafka(tinf: TorrentInfo) : Unit = {
+/*  def pushKafka(tinf: TorrentInfo) : Unit = {
     rtrKafkaClient.send(tinf)
-  }
+  }*/
 
-/*  def saveBatch(tinf: TorrentInfo, pst: PreparedStatement): Unit =
+  def saveBatch(tinf: TorrentInfo, pst: PreparedStatement): Unit =
     pst.setInt(1, tinf.id)
     pst.setString(2, tinf.magnet)
     pst.setString(3, tinf.name)
@@ -122,21 +119,21 @@ object RtrParse {
 
     while(gaiit.hasNext)
       val torrentInfo : TorrentInfo = processRow(gaiit.next(), page)
-      //saveBatch(torrentInfo, pst)
-      pushKafka(torrentInfo)
+      saveBatch(torrentInfo, pst)
+      //pushKafka(torrentInfo)
       newMagnets = newMagnets + 1
 
     val tumit : java.util.Iterator[Element] = tbody.select("tr[class=tum]").iterator()
 
     while(tumit.hasNext)
       val torrentInfo : TorrentInfo = processRow(tumit.next(), page)
-      //saveBatch(torrentInfo, pst)
-      pushKafka(torrentInfo)
+      saveBatch(torrentInfo, pst)
+      //pushKafka(torrentInfo)
       newMagnets = newMagnets + 1
     newMagnets
 
   def processPages(connection: java.sql.Connection, host: String, fromPage: Int, toPage : Int): (Int, Int, Int) =
-    //val pst : PreparedStatement = connection.prepareStatement(INSERT_SQL_TEXT)
+    val pst : PreparedStatement = connection.prepareStatement(INSERT_SQL_TEXT)
     var page_cnt = 0
     var magnets = 0
     val updatedRows = 0
@@ -161,13 +158,18 @@ object RtrParse {
     (page_cnt, magnets, updatedRows)
 
   def main(args : Array[String]) : Unit =
-    val fromPage = args(0).toInt
-    val toPage   = args(1).toInt
+    val fromPage = 1
+    val toPage   = 20
 
-    val user = System.getenv("DB_USER")
-    val pwd  = System.getenv("DB_PWD")
-    val connection: java.sql.Connection = DriverManager.getConnection(Constants.JDBC_URL, user, pwd)
-    val snapper = new Snapper(Constants.JDBC_URL, user, pwd)
+    val uniconf = new Uniconf()
+
+    val JDBC_URL    = uniconf.lookupProperty("flinkJavaKafkaReader.jdbcUrl", "")
+    val DRIVER_NAME = uniconf.lookupProperty("flinkJavaKafkaReader.driverName", "")
+    val USER        = uniconf.lookupProperty("flinkJavaKafkaReader.name", "")
+    val PWD         = uniconf.lookupProperty("flinkJavaKafkaReader.PWD", "")
+
+    val connection: java.sql.Connection = DriverManager.getConnection(JDBC_URL, USER, PWD)
+    val snapper = new Snapper(JDBC_URL, USER, PWD)
     snapper.start()
     connection.setAutoCommit(false)
     // 0..5158
