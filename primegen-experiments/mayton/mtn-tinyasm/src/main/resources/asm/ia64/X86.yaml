@@ -1,0 +1,25 @@
+X86:
+ - int : { javaName : "interrupt", code : 0x01 }
+ - movl
+ - retq : { code : 0xc3 }
+ - movq
+ - push_rbp : { code : 0x55 }
+ - push_rbx : { code : 0x53 }
+ - nop : { code : 0x90 }
+ - pushq
+ - pop
+ - lea
+ - inc
+ - dec
+ - endbr64
+ - subq
+ - cmpl
+ - cltd
+ - idivl
+ - leave
+ - ret
+ - imull
+ - addq
+ - popq
+ - cmpxchg
+

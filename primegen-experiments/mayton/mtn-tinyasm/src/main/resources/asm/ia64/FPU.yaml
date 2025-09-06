@@ -1,0 +1,56 @@
+FPU:
+  "Data Transfer Instructions" :
+    - fld
+    - fild
+    - fbld
+    - fbstp:
+    // "load a constant on top of the stack"
+    - fld1:
+    - fldld2e:
+    - fldl2t:
+    - fldlg2:
+    - flln2:
+    - fldz:
+    - fst:
+    - fstp
+    - fist
+    - fistp: store integer
+    - fxch: exchange
+    - fisttp: store a truncated integer
+  "Arithmetic Instructions"
+    - fabs: absolute value
+    fchs: change sign
+    fxtract: split exponent and significant
+    fadd, faddp, fiadd: addition
+    fsub, fsubp, fisub: subtraction
+    fsubr, fsubrp, fisubr: reverse subtraction
+  fmul, fmulp, fimul
+fsqrt: square root
+fdiv, fdivp, fidiv: division (see also fdiv bug on Wikipedia)
+  fdivr, fdivrp, fidivr
+  fprem
+  fptan
+  fpatan
+frndint: round to integer
+  fscale
+f2xm1: {\displaystyle 2^{x}-1}{\displaystyle 2^{x}-1}
+fyl2x: {\displaystyle y\log _{2}x}{\displaystyle y\log _{2}x}
+fyl2x: {\displaystyle y\log _{2}\left(x+1\right)}{\displaystyle y\log _{2}\left(x+1\right)}
+  FPU Internal and Other Instructions
+finit: initialize FPU
+  fldcw
+  flenv
+  frstor
+  fsave, fnsave
+  fstcw, fnstcw
+  fstenv, fnstenv
+  fstsw, fnstsw
+finccstp and fdecstp: increment or decrement top
+ffree: tag a register as free
+ftst: test
+fcom, fcomp, fcompp: compare floating-point values
+ficom, ficomp: compare with an integer
+fxam: examine a register
+fclex: clear exceptions
+  fnop
+  fwait does the same as wait.

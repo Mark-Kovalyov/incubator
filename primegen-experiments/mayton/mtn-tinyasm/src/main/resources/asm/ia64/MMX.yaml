@@ -1,0 +1,9 @@
+MMX:
+  "Data Transfer Instructions (MMX)" :
+    - movd
+    - movq
+  "Conversion Instructions (MMX)" :
+    - PACKSSDW
+    - PACKSSWB
+    - PACKUSWB
+    - PUNPCKHBW

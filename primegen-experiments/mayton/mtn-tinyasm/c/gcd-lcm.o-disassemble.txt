@@ -1,0 +1,53 @@
+
+gcd-lcm.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <gcd>:
+   0:	f3 0f 1e fa          	endbr64 
+   4:	55                   	push   %rbp
+   5:	48 89 e5             	mov    %rsp,%rbp
+   8:	48 83 ec 10          	sub    $0x10,%rsp
+   c:	89 7d fc             	mov    %edi,-0x4(%rbp)
+   f:	89 75 f8             	mov    %esi,-0x8(%rbp)
+  12:	83 7d f8 00          	cmpl   $0x0,-0x8(%rbp)
+  16:	74 15                	je     2d <gcd+0x2d>
+  18:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  1b:	99                   	cltd   
+  1c:	f7 7d f8             	idivl  -0x8(%rbp)
+  1f:	8b 45 f8             	mov    -0x8(%rbp),%eax
+  22:	89 d6                	mov    %edx,%esi
+  24:	89 c7                	mov    %eax,%edi
+  26:	e8 d5 ff ff ff       	callq  0 <gcd>
+  2b:	eb 03                	jmp    30 <gcd+0x30>
+  2d:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  30:	c9                   	leaveq 
+  31:	c3                   	retq   
+
+0000000000000032 <lcm>:
+  32:	f3 0f 1e fa          	endbr64 
+  36:	55                   	push   %rbp
+  37:	48 89 e5             	mov    %rsp,%rbp
+  3a:	53                   	push   %rbx
+  3b:	48 83 ec 18          	sub    $0x18,%rsp
+  3f:	89 7d ec             	mov    %edi,-0x14(%rbp)
+  42:	89 75 e8             	mov    %esi,-0x18(%rbp)
+  45:	8b 45 ec             	mov    -0x14(%rbp),%eax
+  48:	0f af 45 e8          	imul   -0x18(%rbp),%eax
+  4c:	89 c3                	mov    %eax,%ebx
+  4e:	8b 55 e8             	mov    -0x18(%rbp),%edx
+  51:	8b 45 ec             	mov    -0x14(%rbp),%eax
+  54:	89 d6                	mov    %edx,%esi
+  56:	89 c7                	mov    %eax,%edi
+  58:	e8 00 00 00 00       	callq  5d <lcm+0x2b>
+  5d:	89 c1                	mov    %eax,%ecx
+  5f:	89 d8                	mov    %ebx,%eax
+  61:	99                   	cltd   
+  62:	f7 f9                	idiv   %ecx
+  64:	89 d1                	mov    %edx,%ecx
+  66:	89 c8                	mov    %ecx,%eax
+  68:	48 83 c4 18          	add    $0x18,%rsp
+  6c:	5b                   	pop    %rbx
+  6d:	5d                   	pop    %rbp
+  6e:	c3                   	retq   
