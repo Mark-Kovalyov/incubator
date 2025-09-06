@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>QueenProblem (JavaScript)</title>
+</head>
+
+<script>
+      "use strict";
+
+      // нечетное
+      function odd(a) {
+        return a % 2 == 1;
+      }
+
+      // остаток
+      function reminder(a,b) {
+        return a % b;
+      }
+
+      // Применим на досках N = 6хК+К1, где К1 = 2.
+
+      function main(N) {
+        var res = ("For N = " + N + ", result is : ");
+        var MR = new Array(N+1);
+        for(var i = 0; i < N + 1; i++) {
+          MR[i] = new Array(N+1);
+        }
+        var К1 = reminder(N , 6);
+        var K = (N - К1) / 6;
+        if (odd(K)) {
+          var R2 = 6; // количество решений
+          var m1 = 0;
+          var m2 = 2;
+          var n2 = N / 2;
+          for(var i = 1 ; i <= N ; i++) {
+            var m3 = 0;
+            var j = 0;
+            if (i > n2) {
+              if (odd(i)) {
+                m3 = 1;
+              } else {
+                m3 = -3;
+              }
+              j = (m1 + m3 + m2 * i) % N;
+            }
+            MR[1][i] = j;
+          }
+          for(var i = 0 ; i <= N ; i++) res += MR[1][i] + ",";
+          SDVIG1(N, MR, 1, 1);
+          for(var i = 0 ; i <= N ; i++) res += MR[2][i] + ",";
+          SDVIG1(N, MR, 2, 3);
+          for(var i = 0 ; i <= N ; i++) res += MR[3][i] + ",";
+          SDVIG1(N, MR, 3, 2);
+          for(var i = 0 ; i <= N ; i++) res += MR[4][i] + ",";
+          SDVIG1(N, MR, 4, 2);
+          for(var i = 0 ; i <= N ; i++) res += MR[5][i] + ",";
+          SDVIG1(N, MR, 5, 4);
+          for(var i = 0 ; i <= N ; i++) res += MR[6][i] + ",";
+
+         } else {
+
+          var R2 = 1; // /количество решений/
+          var m1 = 2;
+          var m2 = 2;
+          var n2 = N / 2;
+          var n1 = N - 1;
+
+          for(var i = 1 ; i <= n1 ; i++) {
+            var m3 = 0;
+            if (i > n2) {
+              if (!odd(i)) {
+               m3 = 1;
+              } else {
+               m3 = -3;
+              }
+            }
+            MR[1][i] = (m1 + m3 + m2 * i);
+            if (MR[1][i] > N) {
+              MR[1][i] = MR[1][i] - N;
+            }
+          }
+          MR[1][N] = 1;
+          for(var i = 1 ; i <= N ; i++) {
+            res += MR[1][i] + ",";
+          }
+        }
+        return res;
+      }
+
+      function SDVIG1(N , МR , Q , SD ) {
+      
+          var q = Q + 1
+
+          if (SD == 1) {
+            for(var i = 1 ; i <= N ; i++ ) {
+              МR [q][i] = МR [q - 1][i + 1];
+              МR [q][N] = МR [q - 1][1];
+            }
+          }
+    
+          if (SD == 2) {
+            for(var i = 1 ; i <= N ; i++ ) {
+              МR [q][i + 1] = МR [q - 1][i]
+              МR [q][1] = МR [q - 1][N]
+            }
+          }
+    
+          if (SD == 3) {
+            for(var i = 1 ; i <= N ; i++ ) {
+              МR[q][i] = МR[q - 1][i] + 1
+              if (МR [q][i] > N) {
+                МR [q][i] = 1
+              }
+            }
+          }
+    
+          if (SD == 4) {
+            for(var i = 1 ; i <= N ; i++ ) {
+              МR [q][i] = МR [q - 1][i] - 1
+              if (МR [q][i] < 0) {
+                МR[q][i] = N
+              }
+            }
+          }
+      }
+
+      function onClick1() {
+        var N = document.getElementById("input_n").value;
+        var oldText = document.getElementById("textarea1").value;
+        var result = main(N);
+        document.getElementById("textarea1").value = oldText + "\n" + result;
+      }
+
+	</script>
+<body>
+
+<!--form id="form1"-->
+    N = <input type="text" id="input_n" value="14">
+    <button onclick="onClick1()" id="button1">OK</button>
+    <p><textarea rows="80" cols="120" id="textarea1" placeholder=""></textarea></p>
+<!--/form-->
+
+</body>
+
+</html>
