@@ -19,7 +19,7 @@ public class JavaHikaricpJdbcApp {
 
     private String jdbcUrl  = "jdbc:postgresql://127.0.0.1:5432/orcl";
     private String username = "scott";
-    private String password = "tiger";
+    private String password = "************";
     private String driverClassName = "";
 
     public void init() {
