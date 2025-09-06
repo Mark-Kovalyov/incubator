@@ -1,0 +1,7 @@
+CREATE TABLE EAV_LOG (
+          TS          TIMESTAMP   NOT NULL,
+          OPERATION   CHAR(1)     NOT NULL CHECK (OPERATION IN ('I','U','D')),
+          TABLE_NAME  VARCHAR(64) NOT NULL,
+          COLUMN_NAME VARCHAR(64) NOT NULL,
+          COL_VALUE   TEXT
+);

@@ -1,0 +1,37 @@
+version: '3.5'
+
+services:
+  # Master
+  db1:
+    image: "postgres:12.1"
+    ports:
+      - "15432:5432"
+    volumes:
+      - /bigdata/cdc-jms/db1:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD : "password123"
+  # Slave
+  db2:
+    image: "postgres:12.1"
+    ports:
+      - "25432:5432"
+    volumes:
+      - /bigdata/cdc-jms/db2:/var/lib/postgresql/data
+    environment:
+      FLASK_ENV: development
+
+  # Message Queue Service
+  # http://localhost:8161/admin
+  activemq:
+    image: "webcenter/activemq"
+    ports:
+      - "8161:8161"   # Admin web port (http)
+      - "61616:61616" # MQ connection port (tcp)
+      - "61613:61613"
+    volumes:
+      - /bigdata/cdc-jms/activemq/data:/data
+      - /bigdata/cdc-jms/activemq/log:/var/log/activemq
+    environment:
+      ACTIVEMQ_ADMIN_LOGIN : admin
+      ACTIVEMQ_ADMIN_PASSWORD : admin123
+
