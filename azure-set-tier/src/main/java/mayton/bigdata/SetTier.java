@@ -14,7 +14,7 @@ public class SetTier {
     public static void main(String[] args) {
 
         if (args.length == 0) {
-            logger.info("Use : java -jar azure-set-tier.jar [accountName] [accountKey] [containerName] {Cool | Archive | Premium | Cold}");
+            System.out.println("\nUse : java -jar azure-set-tier.jar [accountName] [accountKey] [containerName] {Cool | Archive | Premium | Cold}");
             return;
         }
 

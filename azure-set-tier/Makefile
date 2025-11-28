@@ -2,6 +2,7 @@ build:
 	mvn clean package install dependency:copy-dependencies -DskipTests
 	mkdir -p bin/
 	cp -f src/main/resources/*.sh bin/
+	cp -f src/main/resources/*.cmd bin/
 	cp -f target/azure-set-tier.jar bin/azure-set-tier.jar
 	cp -f target/dependency/azure-core-1.50.0.jar bin/
 	cp -f target/dependency/azure-core-http-netty-1.15.2.jar                     bin/
