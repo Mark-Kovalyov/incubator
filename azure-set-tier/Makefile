@@ -1,4 +1,12 @@
-build:
+build: clean
+	mkdir -p bin/
+	mvn clean package -DskipTests
+	cp -f src/main/resources/*.sh bin/
+	cp -f src/main/resources/*.cmd bin/
+	cp -f src/main/resources/*.xml bin/
+	cp -f target/azure-set-tier-*-SNAPSHOT-jar-with-dependencies.jar bin-fat/azure-set-tier.jar
+
+build-jars: clean
 	mvn clean package install dependency:copy-dependencies -DskipTests
 	mkdir -p bin/
 	cp -f src/main/resources/*.sh bin/
@@ -39,7 +47,6 @@ build:
 	cp -f target/dependency/slf4j-simple-2.0.9.jar                               bin/
 	cp -f target/dependency/stax2-api-4.2.1.jar                                  bin/
 	cp -f target/dependency/woodstox-core-6.4.0.jar                              bin/
-
 
 clean:
 	rm -f bin/*

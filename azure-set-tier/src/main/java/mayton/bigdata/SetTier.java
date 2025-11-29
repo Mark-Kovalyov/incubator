@@ -11,6 +11,21 @@ public class SetTier {
 
     static Logger logger = LoggerFactory.getLogger(SetTier.class);
 
+    static String asciiWrap(String s) {
+        StringBuilder sb = new StringBuilder();
+        for(char c : s.toCharArray()) {
+            int code = (int)c;
+            if (code >= 32 && code < 128) {
+                sb.append((char)code);
+            } else if (code < 32) {
+                sb.append(String.format("\\x%02x", code));
+            } else {
+                sb.append(String.format("\\u%04x", code));
+            }
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
 
         if (args.length == 0) {
@@ -47,7 +62,7 @@ public class SetTier {
         int nfiles = 0;
 
         for (BlobItem blobItem : container.listBlobs()) {
-            logger.info("Updating tier for blob: {}", blobItem.getName());
+            logger.info("Updating tier for blob: {}", asciiWrap(blobItem.getName()));
             BlobClient blobClient = container.getBlobClient(blobItem.getName());
             blobClient.setAccessTier(AccessTier.fromString(tier));
             nfiles++;
