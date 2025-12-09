@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package mayton.bigdata.kafka.protobuf;
+
+message GeoIpRecord {
+  string trie_key = 1;
+  int64 begin_ip = 2;
+  int64 end_ip = 3;
+  string cc = 4;
+  string country = 5;
+  string region = 6;
+  string city = 7;
+  optional float lattitude = 8;
+  optional float longitude = 9;
+  reserved 10 to 200;
+}
