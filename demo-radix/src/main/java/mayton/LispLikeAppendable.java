@@ -2,7 +2,7 @@ package mayton;
 
 import java.io.IOException;
 
-public class DummyAppendable implements Appendable {
+public class LispLikeAppendable implements Appendable {
 
     public long lineCount = 0;
     public long charCount = 0;
