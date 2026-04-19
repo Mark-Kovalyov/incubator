@@ -1,7 +1,9 @@
+TAG=words
+
 build:
-	mvn clean compile exec:java -Dexec.mainClass="mayton.DemoRadix"
-	iconv -f utf-8 -t windows-1251 words-prefix-tree.txt > words-prefix-tree-1251.txt
-	xxd -i words-prefix-tree-1251.txt > words-prefix-tree-1251.h
+	mvn clean compile exec:java -Dexec.mainClass="mayton.DemoRadix" -Dexec.args=$(TAG)
+	iconv -f utf-8 -t windows-1251 $(TAG)-prefix-tree.txt > $(TAG)-prefix-tree-1251.txt
+	xxd -i $(TAG)-prefix-tree-1251.txt > $(TAG)-prefix-tree-1251.h
 
 
 bloom:

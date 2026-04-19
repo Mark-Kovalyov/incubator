@@ -14,7 +14,6 @@ def split_pe(path):
     data : bytes = None
     with open(path, 'rb') as f:
         data = f.read()
-    # sections
 
     for sec in p.sections:
         name : str = sec.Name.rstrip(b'\x00').decode(errors='replace')
